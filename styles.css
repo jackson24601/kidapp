@@ -60,6 +60,11 @@ button {
   display: block;
 }
 
+.screen--start .card {
+  position: relative;
+  z-index: 2;
+}
+
 .is-hidden {
   pointer-events: none;
   opacity: 0;
@@ -187,6 +192,15 @@ h2 {
   position: absolute;
   inset: 0;
   overflow: hidden;
+}
+
+.preview-field {
+  z-index: 0;
+  opacity: 0.58;
+}
+
+.preview-field .balloon {
+  pointer-events: none;
 }
 
 .balloon {

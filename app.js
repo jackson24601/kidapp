@@ -37,12 +37,15 @@ const finishScreen = document.querySelector("#finish-screen");
 const startButton = document.querySelector("#start-button");
 const playAgainButton = document.querySelector("#play-again-button");
 const repeatButton = document.querySelector("#repeat-button");
+const previewField = document.querySelector("#preview-field");
 const balloonField = document.querySelector("#balloon-field");
 const currentWord = document.querySelector("#current-word");
 
 let audioContext;
 let remainingWords = [];
 let targetWord = "";
+
+renderPreviewBalloons();
 
 startButton.addEventListener("click", startGame);
 playAgainButton.addEventListener("click", startGame);
@@ -61,25 +64,36 @@ function renderBalloons() {
   balloonField.innerHTML = "";
 
   WORDS.forEach((word, index) => {
-    const balloon = document.createElement("button");
+    const balloon = createBalloon(word, index, "button");
     balloon.type = "button";
-    balloon.className = "balloon";
-    balloon.textContent = word;
-    balloon.dataset.word = word;
     balloon.setAttribute("aria-label", `${word} balloon`);
-    balloon.style.setProperty("--balloon-color", BALLOON_COLORS[index % BALLOON_COLORS.length]);
-
-    const position = getBalloonPosition(index);
-    balloon.style.setProperty("--balloon-x", `${position.x}%`);
-    balloon.style.setProperty("--balloon-y", `${position.y}%`);
-    balloon.style.setProperty("--drift-x", `${position.driftX}vw`);
-    balloon.style.setProperty("--drift-y", `${position.driftY}vh`);
-    balloon.style.setProperty("--float-duration", `${position.duration}s`);
-    balloon.style.animationDelay = `${position.delay}s`;
-
     balloon.addEventListener("click", () => handleBalloonTap(balloon));
     balloonField.append(balloon);
   });
+}
+
+function renderPreviewBalloons() {
+  WORDS.forEach((word, index) => {
+    previewField.append(createBalloon(word, index, "div"));
+  });
+}
+
+function createBalloon(word, index, tagName) {
+  const balloon = document.createElement(tagName);
+  balloon.className = "balloon";
+  balloon.textContent = word;
+  balloon.dataset.word = word;
+  balloon.style.setProperty("--balloon-color", BALLOON_COLORS[index % BALLOON_COLORS.length]);
+
+  const position = getBalloonPosition(index);
+  balloon.style.setProperty("--balloon-x", `${position.x}%`);
+  balloon.style.setProperty("--balloon-y", `${position.y}%`);
+  balloon.style.setProperty("--drift-x", `${position.driftX}vw`);
+  balloon.style.setProperty("--drift-y", `${position.driftY}vh`);
+  balloon.style.setProperty("--float-duration", `${position.duration}s`);
+  balloon.style.animationDelay = `${position.delay}s`;
+
+  return balloon;
 }
 
 function getBalloonPosition(index) {
