@@ -1,0 +1,11 @@
+{
+  "name": "Sight Word Pop",
+  "short_name": "Word Pop",
+  "description": "A sight word balloon popping game for kids.",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#9de6ff",
+  "theme_color": "#9de6ff",
+  "orientation": "landscape-primary",
+  "icons": []
+}
