@@ -1,0 +1,8 @@
+{
+  "appId": "com.jackson24601.sightwordpop",
+  "appName": "Sight Word Pop",
+  "webDir": "dist",
+  "ios": {
+    "contentInset": "always"
+  }
+}

@@ -4,7 +4,16 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "build": "node scripts/build-web.mjs",
+    "ios:assets": "node scripts/generate-ios-assets.mjs",
+    "ios:sync": "npm run build && npm run ios:assets && cap sync ios",
+    "ios:open": "npm run ios:sync && cap open ios",
     "start": "python3 -m http.server 4173",
-    "test": "node --check app.js"
+    "test": "node --check app.js && node --check scripts/build-web.mjs && node --check scripts/generate-ios-assets.mjs && npm run build && npm run ios:assets"
+  },
+  "dependencies": {
+    "@capacitor/cli": "^8.3.4",
+    "@capacitor/core": "^8.3.4",
+    "@capacitor/ios": "^8.3.4"
   }
 }

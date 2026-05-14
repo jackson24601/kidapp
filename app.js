@@ -203,7 +203,22 @@ function playBuzz() {
 }
 
 function speakWord(word) {
-  if (!word || !("speechSynthesis" in window)) {
+  if (!word) {
+    return;
+  }
+
+  const nativeSpeech = window.Capacitor?.Plugins?.SightWordSpeech;
+
+  if (nativeSpeech?.speak) {
+    nativeSpeech.speak({ value: word }).catch(() => speakWordInBrowser(word));
+    return;
+  }
+
+  speakWordInBrowser(word);
+}
+
+function speakWordInBrowser(word) {
+  if (!("speechSynthesis" in window)) {
     return;
   }
 
