@@ -11,6 +11,8 @@ npm start
 
 Then open <http://localhost:4173>.
 
+The support website is available at <http://localhost:4173/support.html>.
+
 ## Build the iPad app
 
 This project uses Capacitor to wrap the web game in a native iOS app project.
@@ -36,3 +38,12 @@ a Mac with Xcode and an Apple Developer account:
 
 The current native bundle ID is `com.jackson24601.sightwordpop`, and the app is
 configured as an iPad app.
+
+## Support website
+
+`support.html` is a static support page for App Store Connect's Support URL. It
+explains how to use the app, lists the included sight words, gives
+troubleshooting tips, and describes the app's no-data-collection privacy posture.
+
+Before submitting the App Store listing, update the contact email in
+`support.html` to the address you want families to use for support.
