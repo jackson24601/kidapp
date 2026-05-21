@@ -1,7 +1,15 @@
 import { copyFile, mkdir, rm } from "node:fs/promises";
 import { dirname, join } from "node:path";
 
-const files = ["index.html", "app.js", "styles.css", "manifest.webmanifest", "support.html", "support.css"];
+const files = [
+  "index.html",
+  "app.js",
+  "styles.css",
+  "manifest.webmanifest",
+  "support.html",
+  "support.css",
+  "privacy.html",
+];
 const outputDirectory = "dist";
 
 await rm(outputDirectory, { force: true, recursive: true });
