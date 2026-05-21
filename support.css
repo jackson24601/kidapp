@@ -50,6 +50,14 @@ a {
   margin: 0 auto;
 }
 
+.nav-links {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+  justify-content: flex-end;
+}
+
 .brand,
 .nav-link {
   text-decoration: none;
@@ -260,6 +268,15 @@ footer p {
 }
 
 @media (max-width: 760px) {
+  .nav {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .nav-links {
+    justify-content: flex-start;
+  }
+
   .grid {
     grid-template-columns: 1fr;
   }

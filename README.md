@@ -11,7 +11,8 @@ npm start
 
 Then open <http://localhost:4173>.
 
-The support website is available at <http://localhost:4173/support.html>.
+The support website is available at <http://localhost:4173/support.html>, and
+the privacy policy is available at <http://localhost:4173/privacy.html>.
 
 ## Build the iPad app
 
@@ -43,7 +44,8 @@ configured as an iPad app.
 
 `support.html` is a static support page for App Store Connect's Support URL. It
 explains how to use the app, lists the included sight words, gives
-troubleshooting tips, and describes the app's no-data-collection privacy posture.
+troubleshooting tips, and links to the privacy policy.
 
-Before submitting the App Store listing, update the contact email in
-`support.html` to the address you want families to use for support.
+`privacy.html` is a static privacy policy page for App Store Connect's Privacy
+Policy URL. It explains that the app does not collect user data, does not require
+accounts, does not show ads, and does not use analytics or tracking.
