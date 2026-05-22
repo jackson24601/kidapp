@@ -2,7 +2,19 @@ import { mkdir, writeFile } from "node:fs/promises";
 import { dirname } from "node:path";
 import { deflateSync } from "node:zlib";
 
-const appIconPath = "ios/App/App/Assets.xcassets/AppIcon.appiconset/AppIcon-512@2x.png";
+const appIconDefinitions = [
+  ["ios/App/App/Assets.xcassets/AppIcon.appiconset/AppIcon-512@2x.png", 1024],
+  ["ios/App/App/Assets.xcassets/AppIcon.appiconset/AppIcon-mac-16.png", 16],
+  ["ios/App/App/Assets.xcassets/AppIcon.appiconset/AppIcon-mac-16@2x.png", 32],
+  ["ios/App/App/Assets.xcassets/AppIcon.appiconset/AppIcon-mac-32.png", 32],
+  ["ios/App/App/Assets.xcassets/AppIcon.appiconset/AppIcon-mac-32@2x.png", 64],
+  ["ios/App/App/Assets.xcassets/AppIcon.appiconset/AppIcon-mac-128.png", 128],
+  ["ios/App/App/Assets.xcassets/AppIcon.appiconset/AppIcon-mac-128@2x.png", 256],
+  ["ios/App/App/Assets.xcassets/AppIcon.appiconset/AppIcon-mac-256.png", 256],
+  ["ios/App/App/Assets.xcassets/AppIcon.appiconset/AppIcon-mac-256@2x.png", 512],
+  ["ios/App/App/Assets.xcassets/AppIcon.appiconset/AppIcon-mac-512.png", 512],
+  ["ios/App/App/Assets.xcassets/AppIcon.appiconset/AppIcon-mac-512@2x.png", 1024],
+];
 const splashPaths = [
   "ios/App/App/Assets.xcassets/Splash.imageset/splash-2732x2732.png",
   "ios/App/App/Assets.xcassets/Splash.imageset/splash-2732x2732-1.png",
@@ -132,27 +144,36 @@ class Raster {
   }
 }
 
-await writePng(appIconPath, createIcon());
+for (const [appIconPath, size] of appIconDefinitions) {
+  await writePng(appIconPath, createIcon(size));
+}
 
 for (const splashPath of splashPaths) {
   await writePng(splashPath, createSplash());
 }
 
-console.log("Generated iOS app icon and splash assets.");
+console.log("Generated iOS, Mac-compatible app icon, and splash assets.");
 
-function createIcon() {
-  const image = new Raster(1024, 1024);
+function createIcon(size = 1024) {
+  const image = new Raster(size, size);
+  const scale = size / 1024;
+  const px = (value) => value * scale;
+
   image.fillGradient([157, 230, 255], [248, 251, 255]);
-  image.fillCircle(166, 180, 80, [255, 255, 255]);
-  image.fillCircle(245, 164, 62, [255, 255, 255]);
-  image.fillCircle(830, 156, 90, [255, 255, 255]);
-  image.fillCircle(742, 176, 68, [255, 255, 255]);
-  image.fillEllipse(512, 438, 260, 310, [244, 91, 105], true);
-  image.fillCircle(420, 308, 42, [255, 218, 224]);
-  image.fillTriangle(468, 733, 556, 733, 512, 808, [210, 67, 84]);
-  image.fillRect(503, 798, 18, 150, [92, 92, 92]);
-  image.fillEllipse(512, 1010, 620, 230, [139, 211, 95]);
-  image.drawString("POP", 236, 418, 42, [255, 255, 255]);
+  image.fillCircle(px(166), px(180), px(80), [255, 255, 255]);
+  image.fillCircle(px(245), px(164), px(62), [255, 255, 255]);
+  image.fillCircle(px(830), px(156), px(90), [255, 255, 255]);
+  image.fillCircle(px(742), px(176), px(68), [255, 255, 255]);
+  image.fillEllipse(px(512), px(438), px(260), px(310), [244, 91, 105], true);
+  image.fillCircle(px(420), px(308), px(42), [255, 218, 224]);
+  image.fillTriangle(px(468), px(733), px(556), px(733), px(512), px(808), [210, 67, 84]);
+  image.fillRect(px(503), px(798), px(18), px(150), [92, 92, 92]);
+  image.fillEllipse(px(512), px(1010), px(620), px(230), [139, 211, 95]);
+
+  if (size >= 128) {
+    image.drawString("POP", px(236), px(418), Math.max(1, Math.round(px(42))), [255, 255, 255]);
+  }
+
   return image;
 }
 
